@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DbHelperSQLLib
 {
-    public class PubConstant
+    public class DbHelperPubConstant
     {
         public static string ConnectionString
         {

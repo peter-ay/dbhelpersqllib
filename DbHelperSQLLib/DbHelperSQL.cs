@@ -22,7 +22,7 @@ namespace DbHelperSQLLib
 
         private void ResetConnectionString(string dbCode)
         {
-            SqlConnectionStringBuilder sb = new SqlConnectionStringBuilder(PubConstant.ConnectionString);
+            SqlConnectionStringBuilder sb = new SqlConnectionStringBuilder(DbHelperPubConstant.ConnectionString);
             string database = dbCode;
             sb.IntegratedSecurity = false;
             sb.InitialCatalog = database;
