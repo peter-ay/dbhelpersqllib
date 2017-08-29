@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -323,6 +324,43 @@ namespace DbHelperSQLLib
             }
 
             return command;
+        }
+
+        //通用处理逻辑
+        public void ExecuteCmdTran(List<DbHelperCmdObject> cmdObject)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlTransaction trans = conn.BeginTransaction())
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = conn;
+                    cmd.Transaction = trans;
+                    cmd.CommandTimeout = 200;
+                    try
+                    {
+                        foreach (var item in cmdObject)
+                        {
+                            switch (item.CmdCommandType)
+                            {
+                                case CommandType.StoredProcedure:
+                                    cmd.ExecuteMySPQuery(item.StrSQL, item.Parameters);
+                                    break;
+                                default:
+                                    cmd.ExecuteMyQuery(item.StrSQL, item.Parameters);
+                                    break;
+                            }
+                        }
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
         }
     }
 }

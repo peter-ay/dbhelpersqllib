@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbHelperEx.cs" />
+    <Compile Include="DbHelperCmdObject.cs" />
     <Compile Include="DbHelperSQL.cs" />
     <Compile Include="DbHelperPubConstant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
