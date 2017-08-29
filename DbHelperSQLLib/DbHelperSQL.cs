@@ -327,7 +327,7 @@ namespace DbHelperSQLLib
         }
 
         //通用处理逻辑
-        public void ExecuteCmdTran(List<DbHelperCmdObject> cmdObject)
+        public void ExecuteCmdObjectTran(List<DbHelperCmdObject> cmdObject)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
