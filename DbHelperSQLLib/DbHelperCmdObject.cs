@@ -5,22 +5,20 @@ namespace DbHelperSQLLib
 {
     public class DbHelperCmdObject
     {
-        private CommandType _CmdCommandType = CommandType.Text;
-        public CommandType CmdCommandType
+        public CommandType CmdCommandType { get; set; }
+        public string StrSQL { get; set; }
+        public SqlParameter[] Parameters { get; set; }
+
+        public DbHelperCmdObject()
         {
-            get { return this._CmdCommandType; }
-            set { this._CmdCommandType = value; }
-        }
-        public string StrSQL
-        {
-            get;
-            set;
+
         }
 
-        public SqlParameter[] Parameters
+        public DbHelperCmdObject(string strSql, SqlParameter[] parameters, CommandType cmdCommandType = CommandType.Text)
         {
-            get;
-            set;
+            this.CmdCommandType = cmdCommandType;
+            this.StrSQL = strSql;
+            this.Parameters = parameters;
         }
     }
 }
