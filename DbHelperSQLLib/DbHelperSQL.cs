@@ -171,6 +171,32 @@ namespace DbHelperSQLLib
             }
         }
 
+        public DataSet QueryProcedure(string SQLString, params SqlParameter[] cmdParms)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                DataSet ds = new DataSet();
+                try
+                {
+                    connection.Open();
+                    SqlDataAdapter command = new SqlDataAdapter(SQLString, connection);
+                    command.SelectCommand.CommandTimeout = 200;
+                    command.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    if (cmdParms != null)
+                    {
+                        foreach (SqlParameter parameter in cmdParms)
+                            command.SelectCommand.Parameters.Add(parameter);
+                    }
+                    command.Fill(ds, "ds");
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                return ds;
+            }
+        }
+
         public void ExecuteSqlTran(Hashtable SQLStringList)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
