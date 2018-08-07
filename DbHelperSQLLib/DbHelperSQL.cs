@@ -21,12 +21,29 @@ namespace DbHelperSQLLib
             this.ResetConnectionString(dbCode);
         }
 
+        public DbHelperSQL(string dbCode,string ip,string user,string pwd)
+        {
+            this.ResetConnectionString(dbCode,ip,user,pwd);
+        }
+
         private void ResetConnectionString(string dbCode)
         {
             SqlConnectionStringBuilder sb = new SqlConnectionStringBuilder(DbHelperPubConstant.ConnectionString);
             string database = dbCode;
             sb.IntegratedSecurity = false;
             sb.InitialCatalog = database;
+            connectionString = sb.ConnectionString;
+        }
+
+        private void ResetConnectionString(string dbCode, string ip, string user, string pwd)
+        {
+            SqlConnectionStringBuilder sb = new SqlConnectionStringBuilder(DbHelperPubConstant.ConnectionString);
+            string database = dbCode;
+            sb.IntegratedSecurity = false;
+            sb.DataSource = ip;
+            sb.InitialCatalog = database;
+            sb.UserID = user;
+            sb.Password = pwd;
             connectionString = sb.ConnectionString;
         }
 
